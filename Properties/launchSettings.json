@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ItDepends": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\projects\\MySolution.sln\""
+    }
+  }
+}
