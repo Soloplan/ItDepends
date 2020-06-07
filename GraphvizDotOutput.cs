@@ -6,6 +6,8 @@ using System.Text;
 
 namespace ItDepends
 {
+  using ItDepends.Library;
+
   public class GraphvizDotOutput
   {
     private void InitReference(StringBuilder output, List<string> existingNodes, string nodeName, string label, string shape)
@@ -23,59 +25,52 @@ namespace ItDepends
       output.AppendLine("<graphviz dot>");
       output.AppendLine("digraph sample {");
 
-      Func<string, bool> binaryParticipateInGraph = x => !x.StartsWith("DevExpress.") && !x.StartsWith("System.") && (x != "System") && (x != "Microsoft.CSharp");
-      Func<string, bool> packageParticipateInGraph = x => (x != "JetBrains.Annotations");
       var existingNodes = new List<string>();
       foreach (var project in solution.Projects)
       {
-        var normalizedProjectName = NormalizeReference(project.ProjectName);
+        var normalizedProjectName = NodeFilter.NormalizeReference(project.ProjectName);
         InitReference(output, existingNodes, normalizedProjectName, Path.GetFileName(project.ProjectName), "box");
 
-        foreach (var reference in project.BinaryReferences.Where(binaryParticipateInGraph))
+        foreach (var reference in project.BinaryReferences.Where(NodeFilter.BinaryParticipateInGraph))
         {
-          var normalizedReference = NormalizeReference(reference);
+          var normalizedReference = NodeFilter.NormalizeReference(reference);
           InitReference(output, existingNodes, normalizedReference, reference, "box");
         }
 
         foreach (var reference in project.ProjectReferences)
         {
-          var normalizedReference = NormalizeReference(reference);
+          var normalizedReference = NodeFilter.NormalizeReference(reference);
           InitReference(output, existingNodes, normalizedReference, Path.GetFileNameWithoutExtension(reference), "box");
         }
 
-        foreach (var reference in project.PackageReferences.Where(packageParticipateInGraph))
+        foreach (var reference in project.PackageReferences.Where(NodeFilter.PackageParticipateInGraph))
         {
-          var normalizedReference = NormalizeReference(reference);
+          var normalizedReference = NodeFilter.NormalizeReference(reference);
           InitReference(output, existingNodes, normalizedReference, reference, "ellipse");
         }
       }
 
       foreach (var project in solution.Projects)
       {
-        foreach (var reference in project.BinaryReferences.Where(binaryParticipateInGraph))
+        foreach (var reference in project.BinaryReferences.Where(NodeFilter.BinaryParticipateInGraph))
         {          
-          output.AppendLine($"{NormalizeReference(project.ProjectName)} -> {NormalizeReference(reference)} [color=red]");
+          output.AppendLine($"{NodeFilter.NormalizeReference(project.ProjectName)} -> {NodeFilter.NormalizeReference(reference)} [color=red]");
         }
 
         foreach (var reference in project.ProjectReferences)
         {
-          output.AppendLine($"{NormalizeReference(project.ProjectName)} -> {NormalizeReference(reference)} [color=black]");
+          output.AppendLine($"{NodeFilter.NormalizeReference(project.ProjectName)} -> {NodeFilter.NormalizeReference(reference)} [color=black]");
         }
 
-        foreach (var reference in project.PackageReferences.Where(packageParticipateInGraph))
+        foreach (var reference in project.PackageReferences.Where(NodeFilter.PackageParticipateInGraph))
         {
-          output.AppendLine($"{NormalizeReference(project.ProjectName)} -> {NormalizeReference(reference)} [color=blue]");
+          output.AppendLine($"{NodeFilter.NormalizeReference(project.ProjectName)} -> {NodeFilter.NormalizeReference(reference)} [color=blue]");
         }
       }
 
       output.AppendLine("}");
       output.AppendLine("</graphviz>");
       File.WriteAllText(file, output.ToString());
-    }
-
-    private string NormalizeReference(string name)
-    {
-      return name.ToLower().Substring(name.LastIndexOf("\\") + 1).Replace(".", "_").Replace("_csproj", "").Replace("-", "_");
     }
   }
 }

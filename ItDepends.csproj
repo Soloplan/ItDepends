@@ -5,4 +5,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ItDepends.Library\**" />
+    <Compile Remove="ItDepends.WinForms\**" />
+    <EmbeddedResource Remove="ItDepends.Library\**" />
+    <EmbeddedResource Remove="ItDepends.WinForms\**" />
+    <None Remove="ItDepends.Library\**" />
+    <None Remove="ItDepends.WinForms\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="ItDepends.Library\ItDepends.Library\ItDepends.Library.csproj" />
+  </ItemGroup>
+
 </Project>

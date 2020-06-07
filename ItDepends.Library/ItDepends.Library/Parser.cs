@@ -1,4 +1,4 @@
-﻿namespace ItDepends
+﻿namespace ItDepends.Library
 {
   using System;
   using System.Collections.Generic;
