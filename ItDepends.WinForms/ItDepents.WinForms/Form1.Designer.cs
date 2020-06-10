@@ -35,6 +35,9 @@
       this.uxStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.uxOpenSolutionButton = new System.Windows.Forms.ToolStripButton();
+      this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
+      this.uxShowProjectReferences = new System.Windows.Forms.ToolStripButton();
+      this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -101,7 +104,10 @@
       // toolStrip1
       // 
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.uxOpenSolutionButton});
+            this.uxOpenSolutionButton,
+            this.uxShowBinaryReference,
+            this.uxShowProjectReferences,
+            this.uxShowPackageReferences});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(800, 25);
@@ -117,6 +123,42 @@
       this.uxOpenSolutionButton.Size = new System.Drawing.Size(96, 22);
       this.uxOpenSolutionButton.Text = "Open Solution...";
       this.uxOpenSolutionButton.Click += new System.EventHandler(this.uxOpenSolutionButton_Click);
+      // 
+      // uxShowBinaryReference
+      // 
+      this.uxShowBinaryReference.Checked = true;
+      this.uxShowBinaryReference.CheckOnClick = true;
+      this.uxShowBinaryReference.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.uxShowBinaryReference.Image = ((System.Drawing.Image)(resources.GetObject("uxShowBinaryReference.Image")));
+      this.uxShowBinaryReference.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowBinaryReference.Name = "uxShowBinaryReference";
+      this.uxShowBinaryReference.Size = new System.Drawing.Size(149, 22);
+      this.uxShowBinaryReference.Text = "Show binary references";
+      this.uxShowBinaryReference.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
+      // 
+      // uxShowProjectReferences
+      // 
+      this.uxShowProjectReferences.Checked = true;
+      this.uxShowProjectReferences.CheckOnClick = true;
+      this.uxShowProjectReferences.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.uxShowProjectReferences.Image = ((System.Drawing.Image)(resources.GetObject("uxShowProjectReferences.Image")));
+      this.uxShowProjectReferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowProjectReferences.Name = "uxShowProjectReferences";
+      this.uxShowProjectReferences.Size = new System.Drawing.Size(153, 22);
+      this.uxShowProjectReferences.Text = "Show project references";
+      this.uxShowProjectReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
+      // 
+      // uxShowPackageReferences
+      // 
+      this.uxShowPackageReferences.Checked = true;
+      this.uxShowPackageReferences.CheckOnClick = true;
+      this.uxShowPackageReferences.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.uxShowPackageReferences.Image = ((System.Drawing.Image)(resources.GetObject("uxShowPackageReferences.Image")));
+      this.uxShowPackageReferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowPackageReferences.Name = "uxShowPackageReferences";
+      this.uxShowPackageReferences.Size = new System.Drawing.Size(160, 22);
+      this.uxShowPackageReferences.Text = "Show package references";
+      this.uxShowPackageReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
       // 
       // Form1
       // 
@@ -144,6 +186,9 @@
     private System.Windows.Forms.ToolStripStatusLabel uxStatusLabel;
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton uxOpenSolutionButton;
+    private System.Windows.Forms.ToolStripButton uxShowBinaryReference;
+    private System.Windows.Forms.ToolStripButton uxShowProjectReferences;
+    private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
   }
 }
 

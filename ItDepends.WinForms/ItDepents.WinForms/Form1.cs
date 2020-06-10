@@ -74,10 +74,10 @@
       switch (selectedObject)
       {
         case Node node:
-        {
+          {
             this.Select(node);
             break;
-        }
+          }
       }
     }
 
@@ -154,6 +154,11 @@
           LoadSolution(openFileFialog.FileName);
         }
       }
+    }
+
+    private void uxShowReferences_CheckedChanged(object sender, EventArgs e)
+    {
+      this.uxGraphViewer.Refresh();
     }
   }
 }
