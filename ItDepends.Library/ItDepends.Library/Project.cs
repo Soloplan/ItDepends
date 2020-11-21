@@ -3,6 +3,7 @@
   using System.Collections.Generic;
   using System.IO;
   using System.Linq;
+  using System.Text;
   using System.Text.RegularExpressions;
 
   public class Project
@@ -26,6 +27,7 @@
     public string ProjectPath { get; }
     public string ProjectFile { get; }
     public string ProjectGuid { get; }
+    public string[] TargetFrameworks { get; private set; }
 
     public List<string> BinaryReferences { get; } = new List<string>();
     public List<string> ProjectReferences { get; } = new List<string>();
@@ -87,6 +89,25 @@
         {
           var packageReference = packageReferenceMatch.Groups["packagereference"].Value;
           this.PackageReferences.Add(packageReference);
+        }
+      }
+
+      if (File.Exists(this.ProjectPath))
+      {
+        var projectCsproj = File.ReadAllLines(this.ProjectPath, Encoding.UTF8);
+        var targetFrameworksRegEx = new Regex(@"<TargetFrameworks>(?<targetframeworks>.*)</TargetFrameworks>");
+
+        foreach (var line in projectCsproj)
+        {
+          var targetFrameworks = targetFrameworksRegEx.Match(line);
+          if (targetFrameworks.Success)
+          {
+            this.TargetFrameworks = targetFrameworks.Groups["targetframeworks"].Value.Split(';');
+            if (this.TargetFrameworks.Length == 0)
+            {
+              this.TargetFrameworks = new[] { targetFrameworks.Groups["TargetFrameworks"].Value };
+            }
+          }
         }
       }
     }

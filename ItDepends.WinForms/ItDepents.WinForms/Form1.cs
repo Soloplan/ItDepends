@@ -29,6 +29,12 @@
       foreach (var project in solution.Projects)
       {
         var projectNode = graph.AddNode(NodeFilter.NormalizeReference(project.ProjectName));
+        if ((project.TargetFrameworks != null)
+          && project.TargetFrameworks.Any(x => x.StartsWith("netcore")))
+        {
+          projectNode.Attr.FillColor = Color.PaleGreen;
+        }
+
         foreach (var reference in project.BinaryReferences.Where(NodeFilter.BinaryParticipateInGraph))
         {
           var targetNodeId = NodeFilter.NormalizeReference(reference);
@@ -83,7 +89,7 @@
 
     private void Select(Node node)
     {
-      this.Update(node, 3);
+      this.Update(node, 3, Color.Coral);
     }
 
     private void Unselect(object item)
@@ -91,16 +97,17 @@
       switch (item)
       {
         case Node node:
-          this.Update(node, 1);
+          this.Update(node, 1, Color.Black);
           break;
       }
     }
 
-    private void Update(Node node, int lineWidth)
+    private void Update(Node node, int lineWidth, Color color)
     {
       foreach (var edge in node.Edges)
       {
         edge.Attr.LineWidth = lineWidth;
+        edge.Attr.Color = color;
       }
     }
 

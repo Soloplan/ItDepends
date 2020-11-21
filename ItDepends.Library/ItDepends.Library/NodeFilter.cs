@@ -1,10 +1,5 @@
 ﻿namespace ItDepends.Library
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Security.Cryptography.X509Certificates;
-  using System.Text;
-
   public static class NodeFilter
   {
     public static bool BinaryParticipateInGraph(string nodeName)
