@@ -47,7 +47,7 @@
       var binaryReferenceWithVersionRegEx = new Regex(@"<Reference Include=""(?<binaryreference>.*), Version=(?<version>.*), Culture=(?<culture>.*), PublicKeyToken=(?<publickeytoken>.*)(, processorArchitecture=(?<processorArchitecture>.*))?""\s*\/>", RegexOptions.Compiled);
       var binaryReferenceRegEx = new Regex(@"<Reference Include=""(?<binaryreference>.*)""\s*\/>", RegexOptions.Compiled);
 
-      var projectReferenceRegEx = new Regex(@"<ProjectReference Include=""(?<projectreference>.*)""\s*", RegexOptions.Compiled);
+      var projectReferenceRegEx = new Regex(@"<ProjectReference Include=""(?<projectreference>.*?)""\s*", RegexOptions.Compiled); // match non-greedy!
 
       // <PackageReference Include="Microsoft.DependencyValidation.Analyzers">
       var packageReferenceRegEx = new Regex(@"<PackageReference Include=""(?<packagereference>[a-zA-Z0-9\.]*)""", RegexOptions.Compiled);
