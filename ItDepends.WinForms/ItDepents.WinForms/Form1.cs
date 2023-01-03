@@ -4,6 +4,7 @@
   using System.Linq;
   using System.Text;
   using System.Windows.Forms;
+  using ItDepends;
   using ItDepends.Library;
   using Microsoft.Msagl.Drawing;
   using Microsoft.Msagl.GraphViewerGdi;
@@ -15,33 +16,64 @@
 
     private ToolTip toolTip;
 
+    private Solution solution;
+
     public Form1()
     {
       InitializeComponent();
       this.toolTip = new ToolTip();
     }
 
-    private void LoadSolution(string solutionFile)
+    // Graph legend:
+    // we distinguish shape and color
+    //
+    // shape:
+    //   * rectangle: project
+    //   * ellipse: nuget package
+
+    // color:
+    //   * white: net472
+    //   * blue: .Net Core 3.1
+    //   * beige: .Net Standard
+    private Solution LoadSolution(string solutionFile)
     {
       var solution = Solution.Parser(solutionFile);
+      return solution;
+    }
+
+    private void BuildGraph(Solution solution, GraphOptions graphOptions)
+    {
       var graph = new Graph("Dependencies");
 
       foreach (var project in solution.Projects)
       {
         var projectNode = graph.AddNode(NodeFilter.NormalizeReference(project.ProjectName));
-        if ((project.TargetFrameworks != null)
-          && project.TargetFrameworks.Any(x => x.StartsWith("netcore")))
+        if (project.TargetFrameworks != null)
         {
-          projectNode.Attr.FillColor = Color.PaleGreen;
+          // .Net Core 3.1? -> pale green color
+          if (project.TargetFrameworks.Any(x => x.StartsWith("netcore")))
+          {
+            projectNode.Attr.FillColor = Color.PaleGreen;
+          }
+
+          // .Net Standard? -> beige
+          if (project.TargetFrameworks.Any(x => x.StartsWith("netstandard")))
+          {
+            projectNode.Attr.AddStyle(Style.Dashed);
+            projectNode.Attr.FillColor = Color.Beige;
+          }
         }
 
-        foreach (var reference in project.BinaryReferences.Where(NodeFilter.BinaryParticipateInGraph))
+        if (graphOptions.ShowBinaryReferences)
         {
-          var targetNodeId = NodeFilter.NormalizeReference(reference);
-          var edge = graph.AddEdge(projectNode.Id, targetNodeId);
-          var targetNode = graph.FindNode(targetNodeId);
-          targetNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightYellow;
-          targetNode.Attr.Shape = Shape.Trapezium;
+          foreach (var reference in project.BinaryReferences.Where(NodeFilter.BinaryParticipateInGraph))
+          {
+            var targetNodeId = NodeFilter.NormalizeReference(reference);
+            var edge = graph.AddEdge(projectNode.Id, targetNodeId);
+            var targetNode = graph.FindNode(targetNodeId);
+            targetNode.Attr.FillColor = Color.LightCoral;
+            targetNode.Attr.Shape = Shape.Trapezium;
+          }
         }
 
         foreach (var reference in project.ProjectReferences)
@@ -50,13 +82,16 @@
           var edge = graph.AddEdge(projectNode.Id, targetNodeId);
         }
 
-        foreach (var reference in project.PackageReferences.Where(NodeFilter.PackageParticipateInGraph))
+        if (graphOptions.ShowPackageReferences)
         {
-          var targetNodeId = NodeFilter.NormalizeReference(reference);
-          var edge = graph.AddEdge(projectNode.Id, targetNodeId);
-          var targetNode = graph.FindNode(targetNodeId);
-          targetNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightSkyBlue;
-          targetNode.Attr.Shape = Shape.Trapezium;
+          foreach (var reference in project.PackageReferences.Where(NodeFilter.PackageParticipateInGraph))
+          {
+            var targetNodeId = NodeFilter.NormalizeReference(reference);
+            var edge = graph.AddEdge(projectNode.Id, targetNodeId);
+            var targetNode = graph.FindNode(targetNodeId);
+            targetNode.Attr.FillColor = Color.LightSkyBlue;
+            targetNode.Attr.Shape = Shape.Trapezium;
+          }
         }
       }
 
@@ -154,11 +189,12 @@
     {
       using (var openFileFialog = new OpenFileDialog())
       {
-        openFileFialog.Filter = "C# solution (*.sln)|*.sln";
+        openFileFialog.Filter = "C# solution (*.sln)|*.sln|C# solution filter (*.slnf)|*.slnf";
         openFileFialog.CheckFileExists = true;
         if (openFileFialog.ShowDialog(this) == DialogResult.OK)
         {
-          LoadSolution(openFileFialog.FileName);
+          this.solution = LoadSolution(openFileFialog.FileName);
+          this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked });
         }
       }
     }
@@ -166,6 +202,40 @@
     private void uxShowReferences_CheckedChanged(object sender, EventArgs e)
     {
       this.uxGraphViewer.Refresh();
+    }
+
+    private void uxShowBinaryReference_Click(object sender, EventArgs e)
+    {
+      // toggle binary references
+      this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked });
+    }
+
+    private void uxShowPackageReferences_Click(object sender, EventArgs e)
+    {
+      // toggle package references
+      this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked });
+    }
+
+    private void uxSaveAsGraphViz_Click(object sender, EventArgs e)
+    {
+      if (this.solution == null)
+      {
+        return;
+      }
+
+      using (var saveFileDialog = new SaveFileDialog())
+      {
+        if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+        {
+          new GraphvizDotOutput().Write(saveFileDialog.FileName, this.solution);
+        }
+      }
+    }
+
+    private class GraphOptions
+    {
+      public bool ShowPackageReferences { get; set; }
+      public bool ShowBinaryReferences { get; set; }
     }
   }
 }

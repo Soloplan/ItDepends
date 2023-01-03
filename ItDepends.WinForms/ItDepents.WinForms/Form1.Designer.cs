@@ -28,7 +28,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-      Microsoft.Msagl.Core.Geometry.Curves.PlaneTransformation planeTransformation1 = new Microsoft.Msagl.Core.Geometry.Curves.PlaneTransformation();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.uxGraphViewer = new Microsoft.Msagl.GraphViewerGdi.GViewer();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -36,8 +35,8 @@
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.uxOpenSolutionButton = new System.Windows.Forms.ToolStripButton();
       this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
-      this.uxShowProjectReferences = new System.Windows.Forms.ToolStripButton();
       this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
+      this.uxSaveAsGraphViz = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -76,7 +75,7 @@
       this.uxGraphViewer.TabIndex = 0;
       this.uxGraphViewer.TightOffsetForRouting = 0.125D;
       this.uxGraphViewer.ToolBarIsVisible = true;
-      this.uxGraphViewer.Transform = planeTransformation1;
+      this.uxGraphViewer.Transform = ((Microsoft.Msagl.Core.Geometry.Curves.PlaneTransformation)(resources.GetObject("uxGraphViewer.Transform")));
       this.uxGraphViewer.UndoRedoButtonsVisible = true;
       this.uxGraphViewer.WindowZoomButtonPressed = false;
       this.uxGraphViewer.ZoomF = 1D;
@@ -106,8 +105,8 @@
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uxOpenSolutionButton,
             this.uxShowBinaryReference,
-            this.uxShowProjectReferences,
-            this.uxShowPackageReferences});
+            this.uxShowPackageReferences,
+            this.uxSaveAsGraphViz});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(800, 25);
@@ -135,18 +134,7 @@
       this.uxShowBinaryReference.Size = new System.Drawing.Size(149, 22);
       this.uxShowBinaryReference.Text = "Show binary references";
       this.uxShowBinaryReference.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
-      // 
-      // uxShowProjectReferences
-      // 
-      this.uxShowProjectReferences.Checked = true;
-      this.uxShowProjectReferences.CheckOnClick = true;
-      this.uxShowProjectReferences.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.uxShowProjectReferences.Image = ((System.Drawing.Image)(resources.GetObject("uxShowProjectReferences.Image")));
-      this.uxShowProjectReferences.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.uxShowProjectReferences.Name = "uxShowProjectReferences";
-      this.uxShowProjectReferences.Size = new System.Drawing.Size(153, 22);
-      this.uxShowProjectReferences.Text = "Show project references";
-      this.uxShowProjectReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
+      this.uxShowBinaryReference.Click += new System.EventHandler(this.uxShowBinaryReference_Click);
       // 
       // uxShowPackageReferences
       // 
@@ -159,6 +147,16 @@
       this.uxShowPackageReferences.Size = new System.Drawing.Size(160, 22);
       this.uxShowPackageReferences.Text = "Show package references";
       this.uxShowPackageReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
+      this.uxShowPackageReferences.Click += new System.EventHandler(this.uxShowPackageReferences_Click);
+      // 
+      // uxSaveAsGraphViz
+      // 
+      this.uxSaveAsGraphViz.Image = ((System.Drawing.Image)(resources.GetObject("uxSaveAsGraphViz.Image")));
+      this.uxSaveAsGraphViz.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxSaveAsGraphViz.Name = "uxSaveAsGraphViz";
+      this.uxSaveAsGraphViz.Size = new System.Drawing.Size(124, 22);
+      this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
+      this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
       // 
       // Form1
       // 
@@ -187,8 +185,8 @@
     private System.Windows.Forms.ToolStrip toolStrip1;
     private System.Windows.Forms.ToolStripButton uxOpenSolutionButton;
     private System.Windows.Forms.ToolStripButton uxShowBinaryReference;
-    private System.Windows.Forms.ToolStripButton uxShowProjectReferences;
     private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
-  }
+        private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
+    }
 }
 

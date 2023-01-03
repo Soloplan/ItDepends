@@ -90,6 +90,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ItDepends.csproj">
+      <Project>{7d64ca31-fd4e-4290-ac68-e38ea8e32057}</Project>
+      <Name>ItDepends</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ItDepends.Library\ItDepends.Library\ItDepends.Library.csproj">
       <Project>{a7af86c1-bb15-42fe-811b-07ec5968456f}</Project>
       <Name>ItDepends.Library</Name>
