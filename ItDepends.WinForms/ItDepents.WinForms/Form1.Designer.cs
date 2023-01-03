@@ -37,6 +37,7 @@
       this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
       this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
       this.uxSaveAsGraphViz = new System.Windows.Forms.ToolStripButton();
+      this.uxShowNewCandidates = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -106,7 +107,8 @@
             this.uxOpenSolutionButton,
             this.uxShowBinaryReference,
             this.uxShowPackageReferences,
-            this.uxSaveAsGraphViz});
+            this.uxSaveAsGraphViz,
+            this.uxShowNewCandidates});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(800, 25);
@@ -158,6 +160,16 @@
       this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
       this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
       // 
+      // uxShowNewCandidates
+      // 
+      this.uxShowNewCandidates.CheckOnClick = true;
+      this.uxShowNewCandidates.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidates.Image")));
+      this.uxShowNewCandidates.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowNewCandidates.Name = "uxShowNewCandidates";
+      this.uxShowNewCandidates.Size = new System.Drawing.Size(141, 22);
+      this.uxShowNewCandidates.Text = "Show new candidates";
+      this.uxShowNewCandidates.Click += new System.EventHandler(this.uxShowNewCandidates_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,6 +199,7 @@
     private System.Windows.Forms.ToolStripButton uxShowBinaryReference;
     private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
         private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
+        private System.Windows.Forms.ToolStripButton uxShowNewCandidates;
     }
 }
 

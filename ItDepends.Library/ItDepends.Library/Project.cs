@@ -10,8 +10,11 @@
   {
     private readonly string solutionFolder;
 
+    private readonly Solution solution;
+
     public Project(Solution solution, string projectType, string projectName, string projectPath, string projectGuid)
     {
+      this.solution = solution;
       this.solutionFolder = Path.GetDirectoryName(solution.Filename);
       this.ProjectType = projectType;
       this.ProjectName = projectName;
@@ -32,6 +35,43 @@
     public List<string> BinaryReferences { get; } = new List<string>();
     public List<string> ProjectReferences { get; } = new List<string>();
     public List<string> PackageReferences { get; } = new List<string>();
+
+    private List<Project> projectReferencesAsProjects;
+
+    public List<Project> ProjectReferencesAsProjects
+    {
+      get
+      {
+        // did we built the complete list in the past? then return it.
+        if (this.projectReferencesAsProjects != null)
+        {
+          return this.projectReferencesAsProjects;
+        }
+
+        // no complete list yet. Try to build it now
+        var projectReferences = new List<Project>();
+        foreach (var projectReference in this.ProjectReferences)
+        {
+          var projectFileName = Path.GetFileName(projectReference);
+          var referencedProject = solution.Projects.FirstOrDefault(x => x.ProjectFile == projectFileName);
+          if (referencedProject != null)
+          {
+            projectReferences.Add(referencedProject);
+          }
+        }
+
+        // if we found all projects, remember them for later calls
+        if (projectReferences.Count == this.ProjectReferences.Count)
+        {
+          // found all project references
+          this.projectReferencesAsProjects = projectReferences;
+        }
+
+        // return what we found (might not be all projects)
+        return projectReferences;
+      }
+    }
+
     public IEnumerable<string> References
     {
       get
@@ -96,6 +136,7 @@
       {
         var projectCsproj = File.ReadAllLines(this.ProjectPath, Encoding.UTF8);
         var targetFrameworksRegEx = new Regex(@"<TargetFrameworks>(?<targetframeworks>.*)</TargetFrameworks>");
+        var targetFrameworkRegEx = new Regex(@"<TargetFramework>(?<targetframework>.*)</TargetFramework>");
 
         foreach (var line in projectCsproj)
         {
@@ -106,6 +147,14 @@
             if (this.TargetFrameworks.Length == 0)
             {
               this.TargetFrameworks = new[] { targetFrameworks.Groups["TargetFrameworks"].Value };
+            }
+          }
+          else
+          {
+            var targetFrameworkMatch = targetFrameworkRegEx.Match(line);
+            if (targetFrameworkMatch.Success)
+            {
+              this.TargetFrameworks = new[] { targetFrameworkMatch.Value };
             }
           }
         }
