@@ -135,8 +135,8 @@
       if (File.Exists(this.ProjectPath))
       {
         var projectCsproj = File.ReadAllLines(this.ProjectPath, Encoding.UTF8);
-        var targetFrameworksRegEx = new Regex(@"<TargetFrameworks>(?<targetframeworks>.*)</TargetFrameworks>");
-        var targetFrameworkRegEx = new Regex(@"<TargetFramework>(?<targetframework>.*)</TargetFramework>");
+        var targetFrameworksRegEx = new Regex(@"<TargetFrameworks>(?<targetframeworks>.*)<\/TargetFrameworks>");
+        var targetFrameworkRegEx = new Regex(@"<TargetFramework>(?<targetframework>.*)<\/TargetFramework>");
 
         foreach (var line in projectCsproj)
         {
@@ -146,7 +146,7 @@
             this.TargetFrameworks = targetFrameworks.Groups["targetframeworks"].Value.Split(';');
             if (this.TargetFrameworks.Length == 0)
             {
-              this.TargetFrameworks = new[] { targetFrameworks.Groups["TargetFrameworks"].Value };
+              this.TargetFrameworks = new[] { targetFrameworks.Groups["targetframeworks"].Value };
             }
           }
           else
@@ -154,7 +154,7 @@
             var targetFrameworkMatch = targetFrameworkRegEx.Match(line);
             if (targetFrameworkMatch.Success)
             {
-              this.TargetFrameworks = new[] { targetFrameworkMatch.Value };
+              this.TargetFrameworks = new[] { targetFrameworkMatch.Groups["targetframework"].Value };
             }
           }
         }
