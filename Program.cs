@@ -15,7 +15,7 @@ namespace ItDepends
       }
 
       var solutionFile = args[0];
-      var solution = Solution.Parser(solutionFile);
+      var solution = Solution.ReadFromSln(solutionFile);
       new GraphvizDotOutput().Write("demo.txt", solution);
     }
   }

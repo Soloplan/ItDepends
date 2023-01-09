@@ -1,6 +1,7 @@
 ﻿namespace ItDepents.WinForms
 {
   using System;
+  using System.IO;
   using System.Linq;
   using System.Text;
   using System.Windows.Forms;
@@ -39,8 +40,11 @@
     //   * beige: .Net Standard
     private Solution LoadSolution(string solutionFile)
     {
-      var solution = Solution.Parser(solutionFile);
-      return solution;
+      switch (Path.GetExtension(solutionFile))
+      {
+        case ".slnf": return Solution.ReadFromSlnf(solutionFile);
+        default: return Solution.ReadFromSln(solutionFile);
+      }
     }
 
     private void BuildGraph(Solution solution, GraphOptions graphOptions)
@@ -67,10 +71,20 @@
           }
         }
 
-        if (!project.TargetFrameworks.SupportsNetCore()
-          && graphOptions.ShowNewCandidates)
+        if (!project.TargetFrameworks.SupportsNetCore31()
+          && graphOptions.ShowNewCandidatesNetCore31)
         {
-          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNetCore());
+          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNetCore31());
+          if (allReferencesSupportCore)
+          {
+            projectNode.Attr.FillColor = Color.GreenYellow;
+          }
+        }
+
+        if (!project.TargetFrameworks.SupportsNet6()
+          && graphOptions.ShowNewCandidatesNet6)
+        {
+          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNet6());
           if (allReferencesSupportCore)
           {
             projectNode.Attr.FillColor = Color.GreenYellow;
@@ -186,9 +200,8 @@
             // if we have a project, evaluate its references
             foreach (var projectReference in project.ProjectReferencesAsProjects)
             {
-              var projectSuportsNetCode = projectReference?.TargetFrameworks.SupportsNetCore() ?? false;
-              const string SupportsNetCore = "(supports .Net Core)";
-              sb.AppendLine($"references {projectReference.ProjectName} {(projectSuportsNetCode ? SupportsNetCore : string.Empty)}");
+              var supportedFrameworks = string.Join(";", projectReference?.TargetFrameworks);
+              sb.AppendLine($"references {projectReference.ProjectName} ({supportedFrameworks})");
             }
           }
           else
@@ -236,19 +249,36 @@
     private void uxShowBinaryReference_Click(object sender, EventArgs e)
     {
       // toggle binary references
-      this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked, ShowNewCandidates = this.uxShowNewCandidates.Checked });
+      this.BuildGraph(this.solution, this.BuildGraphOptions());
     }
 
     private void uxShowPackageReferences_Click(object sender, EventArgs e)
     {
       // toggle package references
-      this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked, ShowNewCandidates = this.uxShowNewCandidates.Checked });
+      this.BuildGraph(this.solution, this.BuildGraphOptions());
     }
 
-    private void uxShowNewCandidates_Click(object sender, EventArgs e)
+    private void uxShowNewCandidatesNetCore31_Click(object sender, EventArgs e)
     {
       // toggle new candidates
-      this.BuildGraph(this.solution, new GraphOptions { ShowPackageReferences = this.uxShowPackageReferences.Checked, ShowBinaryReferences = this.uxShowBinaryReference.Checked, ShowNewCandidates = this.uxShowNewCandidates.Checked });
+      this.BuildGraph(this.solution, this.BuildGraphOptions());
+    }
+
+    private void uxShowNewCandidatesNetCore6_Click(object sender, EventArgs e)
+    {
+      // toggle new candidates
+      this.BuildGraph(this.solution, this.BuildGraphOptions());
+    }
+
+    private GraphOptions BuildGraphOptions()
+    {
+      return new GraphOptions
+      {
+        ShowPackageReferences = this.uxShowPackageReferences.Checked,
+        ShowBinaryReferences = this.uxShowBinaryReference.Checked,
+        ShowNewCandidatesNetCore31 = this.uxShowNewCandidatesNetCore31.Checked,
+        ShowNewCandidatesNet6 = this.uxShowNewCandidatesNetCore6.Checked,
+      };
     }
 
     private void uxSaveAsGraphViz_Click(object sender, EventArgs e)
@@ -271,7 +301,9 @@
     {
       public bool ShowPackageReferences { get; set; }
       public bool ShowBinaryReferences { get; set; }
-      public bool ShowNewCandidates { get; set; }
+      public bool ShowNewCandidatesNetCore31 { get; set; }
+      public bool ShowNewCandidatesNet6 { get; set; }
     }
+
   }
 }

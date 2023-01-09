@@ -37,7 +37,8 @@
       this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
       this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
       this.uxSaveAsGraphViz = new System.Windows.Forms.ToolStripButton();
-      this.uxShowNewCandidates = new System.Windows.Forms.ToolStripButton();
+      this.uxShowNewCandidatesNetCore31 = new System.Windows.Forms.ToolStripButton();
+      this.uxShowNewCandidatesNetCore6 = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -72,7 +73,7 @@
       this.uxGraphViewer.SaveButtonVisible = true;
       this.uxGraphViewer.SaveGraphButtonVisible = true;
       this.uxGraphViewer.SaveInVectorFormatEnabled = true;
-      this.uxGraphViewer.Size = new System.Drawing.Size(800, 403);
+      this.uxGraphViewer.Size = new System.Drawing.Size(953, 403);
       this.uxGraphViewer.TabIndex = 0;
       this.uxGraphViewer.TightOffsetForRouting = 0.125D;
       this.uxGraphViewer.ToolBarIsVisible = true;
@@ -91,7 +92,7 @@
             this.uxStatusLabel});
       this.statusStrip1.Location = new System.Drawing.Point(0, 428);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+      this.statusStrip1.Size = new System.Drawing.Size(953, 22);
       this.statusStrip1.TabIndex = 1;
       this.statusStrip1.Text = "statusStrip1";
       // 
@@ -108,10 +109,11 @@
             this.uxShowBinaryReference,
             this.uxShowPackageReferences,
             this.uxSaveAsGraphViz,
-            this.uxShowNewCandidates});
+            this.uxShowNewCandidatesNetCore31,
+            this.uxShowNewCandidatesNetCore6});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(800, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(953, 25);
       this.toolStrip1.TabIndex = 2;
       this.toolStrip1.Text = "toolStrip1";
       // 
@@ -160,21 +162,31 @@
       this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
       this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
       // 
-      // uxShowNewCandidates
+      // uxShowNewCandidatesNetCore31
       // 
-      this.uxShowNewCandidates.CheckOnClick = true;
-      this.uxShowNewCandidates.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidates.Image")));
-      this.uxShowNewCandidates.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.uxShowNewCandidates.Name = "uxShowNewCandidates";
-      this.uxShowNewCandidates.Size = new System.Drawing.Size(141, 22);
-      this.uxShowNewCandidates.Text = "Show new candidates";
-      this.uxShowNewCandidates.Click += new System.EventHandler(this.uxShowNewCandidates_Click);
+      this.uxShowNewCandidatesNetCore31.CheckOnClick = true;
+      this.uxShowNewCandidatesNetCore31.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidatesNetCore31.Image")));
+      this.uxShowNewCandidatesNetCore31.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowNewCandidatesNetCore31.Name = "uxShowNewCandidatesNetCore31";
+      this.uxShowNewCandidatesNetCore31.Size = new System.Drawing.Size(192, 22);
+      this.uxShowNewCandidatesNetCore31.Text = "Show new candidates (.Net 3.1)";
+      this.uxShowNewCandidatesNetCore31.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore31_Click);
+      // 
+      // uxShowNewCandidatesNetCore6
+      // 
+      this.uxShowNewCandidatesNetCore6.CheckOnClick = true;
+      this.uxShowNewCandidatesNetCore6.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidatesNetCore6.Image")));
+      this.uxShowNewCandidatesNetCore6.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowNewCandidatesNetCore6.Name = "uxShowNewCandidatesNetCore6";
+      this.uxShowNewCandidatesNetCore6.Size = new System.Drawing.Size(183, 22);
+      this.uxShowNewCandidatesNetCore6.Text = "Show new candidates (.Net 6)";
+      this.uxShowNewCandidatesNetCore6.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore6_Click);
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(800, 450);
+      this.ClientSize = new System.Drawing.Size(953, 450);
       this.Controls.Add(this.uxGraphViewer);
       this.Controls.Add(this.toolStrip1);
       this.Controls.Add(this.statusStrip1);
@@ -199,7 +211,8 @@
     private System.Windows.Forms.ToolStripButton uxShowBinaryReference;
     private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
         private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
-        private System.Windows.Forms.ToolStripButton uxShowNewCandidates;
+        private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore31;
+        private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore6;
     }
 }
 
