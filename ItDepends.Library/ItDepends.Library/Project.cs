@@ -1,5 +1,6 @@
 ﻿namespace ItDepends.Library
 {
+  using System;
   using System.Collections.Generic;
   using System.IO;
   using System.Linq;
@@ -137,6 +138,7 @@
         var projectCsproj = File.ReadAllLines(this.ProjectPath, Encoding.UTF8);
         var targetFrameworksRegEx = new Regex(@"<TargetFrameworks>(?<targetframeworks>.*)<\/TargetFrameworks>");
         var targetFrameworkRegEx = new Regex(@"<TargetFramework>(?<targetframework>.*)<\/TargetFramework>");
+        var targetFrameworkVersionRegEx = new Regex(@"<TargetFrameworkVersion>(?<targetframework>.*)<\/TargetFrameworkVersion>"); // non-SDK (aka "legacy") csproj format
 
         foreach (var line in projectCsproj)
         {
@@ -155,6 +157,16 @@
             if (targetFrameworkMatch.Success)
             {
               this.TargetFrameworks = new[] { targetFrameworkMatch.Groups["targetframework"].Value };
+            }
+            else
+            {
+              var targetFrameworkVersionMatch = targetFrameworkVersionRegEx.Match(line);
+              if (targetFrameworkVersionMatch.Success)
+              {
+                var legacyTargetFrameworkVersion = targetFrameworkVersionMatch.Groups["targetframework"].Value;
+                legacyTargetFrameworkVersion = legacyTargetFrameworkVersion.Replace("v4.7.2", "net472");
+                this.TargetFrameworks = new[] { legacyTargetFrameworkVersion };
+              }
             }
           }
         }
