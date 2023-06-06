@@ -57,8 +57,8 @@
         projectNode.UserData = project;
         if (project.TargetFrameworks != null)
         {
-          // .Net Core 3.1? -> pale green color
-          if (project.TargetFrameworks.Any(x => x.StartsWith("netcore")))
+          // .Net 6? -> pale green color
+          if (project.TargetFrameworks.Any(x => x.StartsWith("net6")))
           {
             projectNode.Attr.FillColor = Color.PaleGreen;
           }
