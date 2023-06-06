@@ -49,7 +49,7 @@
           var projectGuid = projectMatch.Groups["projectguid"].Value;
 
           if (projectFile.Contains(".csproj")
-            && !projectFile.Contains(".Test")
+            ////&& !projectFile.Contains(".Test")
             && (projectFilter == null || projectFilter.Contains(projectFile)))
           {
             var project = new Project(solution, projectType, projectName, projectFile, projectGuid);
