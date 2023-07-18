@@ -5,12 +5,10 @@
   using System.Linq;
   using System.Text;
   using System.Windows.Forms;
-  using System.Windows.Forms.VisualStyles;
   using ItDepends;
   using ItDepends.Library;
   using Microsoft.Msagl.Drawing;
   using Microsoft.Msagl.GraphViewerGdi;
-  using Microsoft.Msagl.Layout.Incremental;
 
   // https://github.com/microsoft/automatic-graph-layout
   public partial class Form1 : Form
@@ -55,6 +53,17 @@
       {
         var projectNode = graph.AddNode(NodeFilter.NormalizeReference(project.ProjectName));
         projectNode.UserData = project;
+        if (project.ProjectName.Contains(".Interop"))
+        {
+          projectNode.Attr.FillColor = Color.LightGray;
+        }
+
+        if (project.ProjectName.EndsWith(".Test")
+            || project.ProjectName.EndsWith(".Tests"))
+        {
+          projectNode.Attr.FillColor = Color.LightSteelBlue;
+        }
+
         if (project.TargetFrameworks != null)
         {
           // .Net 6? -> pale green color
@@ -67,17 +76,7 @@
           if (project.TargetFrameworks.Any(x => x.StartsWith("netstandard")))
           {
             projectNode.Attr.AddStyle(Style.Dashed);
-            projectNode.Attr.FillColor = Color.Beige;
-          }
-        }
-
-        if (!project.TargetFrameworks.SupportsNetCore31()
-          && graphOptions.ShowNewCandidatesNetCore31)
-        {
-          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNetCore31());
-          if (allReferencesSupportCore)
-          {
-            projectNode.Attr.FillColor = Color.GreenYellow;
+            projectNode.Attr.FillColor = Color.LightYellow;
           }
         }
 
@@ -103,6 +102,13 @@
           }
         }
 
+        // highlight projects whose project name matches the search text
+        if (!string.IsNullOrWhiteSpace(graphOptions.SearchText)
+          && project.ProjectName.Contains(graphOptions.SearchText))
+        {
+          projectNode.Attr.FillColor = Color.OrangeRed;
+        }
+        
         foreach (var reference in project.ProjectReferences)
         {
           var targetNodeId = NodeFilter.NormalizeReference(reference);
@@ -258,9 +264,8 @@
       this.BuildGraph(this.solution, this.BuildGraphOptions());
     }
 
-    private void uxShowNewCandidatesNetCore31_Click(object sender, EventArgs e)
+    private void uxSearch_Click(object sender, EventArgs e)
     {
-      // toggle new candidates
       this.BuildGraph(this.solution, this.BuildGraphOptions());
     }
 
@@ -276,8 +281,8 @@
       {
         ShowPackageReferences = this.uxShowPackageReferences.Checked,
         ShowBinaryReferences = this.uxShowBinaryReference.Checked,
-        ShowNewCandidatesNetCore31 = this.uxShowNewCandidatesNetCore31.Checked,
         ShowNewCandidatesNet6 = this.uxShowNewCandidatesNetCore6.Checked,
+        SearchText = this.uxSearchText.Text,
       };
     }
 
@@ -301,9 +306,12 @@
     {
       public bool ShowPackageReferences { get; set; }
       public bool ShowBinaryReferences { get; set; }
-      public bool ShowNewCandidatesNetCore31 { get; set; }
       public bool ShowNewCandidatesNet6 { get; set; }
-    }
 
+      /// <summary>
+      /// Gets or sets a search text. Project names containing this text will be highlighted. 
+      /// </summary>
+      public string SearchText { get; set; }
+    }
   }
 }

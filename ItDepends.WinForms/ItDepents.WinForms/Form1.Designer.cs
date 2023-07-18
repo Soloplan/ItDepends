@@ -37,11 +37,13 @@
       this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
       this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
       this.uxSaveAsGraphViz = new System.Windows.Forms.ToolStripButton();
-      this.uxShowNewCandidatesNetCore31 = new System.Windows.Forms.ToolStripButton();
       this.uxShowNewCandidatesNetCore6 = new System.Windows.Forms.ToolStripButton();
+      this.uxSearch = new System.Windows.Forms.ToolStripButton();
+      this.uxSearchText = new System.Windows.Forms.ToolStripTextBox();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
+
       // 
       // uxGraphViewer
       // 
@@ -85,37 +87,34 @@
       this.uxGraphViewer.ObjectUnderMouseCursorChanged += new System.EventHandler<Microsoft.Msagl.Drawing.ObjectUnderMouseCursorChangedEventArgs>(this.uxGraphViewer_ObjectUnderMouseCursorChanged);
       this.uxGraphViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.uxGraphViewer_MouseMove);
       this.uxGraphViewer.Click += new System.EventHandler(this.uxGraphViewer_Click);
+
       // 
       // statusStrip1
       // 
-      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.uxStatusLabel});
+      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.uxStatusLabel });
       this.statusStrip1.Location = new System.Drawing.Point(0, 428);
       this.statusStrip1.Name = "statusStrip1";
       this.statusStrip1.Size = new System.Drawing.Size(953, 22);
       this.statusStrip1.TabIndex = 1;
       this.statusStrip1.Text = "statusStrip1";
+
       // 
       // uxStatusLabel
       // 
       this.uxStatusLabel.Name = "uxStatusLabel";
       this.uxStatusLabel.Size = new System.Drawing.Size(118, 17);
       this.uxStatusLabel.Text = "toolStripStatusLabel1";
+
       // 
       // toolStrip1
       // 
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.uxOpenSolutionButton,
-            this.uxShowBinaryReference,
-            this.uxShowPackageReferences,
-            this.uxSaveAsGraphViz,
-            this.uxShowNewCandidatesNetCore31,
-            this.uxShowNewCandidatesNetCore6});
+      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.uxOpenSolutionButton, this.uxShowBinaryReference, this.uxShowPackageReferences, this.uxSaveAsGraphViz, this.uxShowNewCandidatesNetCore6, this.uxSearch, this.uxSearchText });
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(953, 25);
       this.toolStrip1.TabIndex = 2;
       this.toolStrip1.Text = "toolStrip1";
+
       // 
       // uxOpenSolutionButton
       // 
@@ -126,6 +125,7 @@
       this.uxOpenSolutionButton.Size = new System.Drawing.Size(96, 22);
       this.uxOpenSolutionButton.Text = "Open Solution...";
       this.uxOpenSolutionButton.Click += new System.EventHandler(this.uxOpenSolutionButton_Click);
+
       // 
       // uxShowBinaryReference
       // 
@@ -139,6 +139,7 @@
       this.uxShowBinaryReference.Text = "Show binary references";
       this.uxShowBinaryReference.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
       this.uxShowBinaryReference.Click += new System.EventHandler(this.uxShowBinaryReference_Click);
+
       // 
       // uxShowPackageReferences
       // 
@@ -152,6 +153,7 @@
       this.uxShowPackageReferences.Text = "Show package references";
       this.uxShowPackageReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
       this.uxShowPackageReferences.Click += new System.EventHandler(this.uxShowPackageReferences_Click);
+
       // 
       // uxSaveAsGraphViz
       // 
@@ -161,16 +163,7 @@
       this.uxSaveAsGraphViz.Size = new System.Drawing.Size(124, 22);
       this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
       this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
-      // 
-      // uxShowNewCandidatesNetCore31
-      // 
-      this.uxShowNewCandidatesNetCore31.CheckOnClick = true;
-      this.uxShowNewCandidatesNetCore31.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidatesNetCore31.Image")));
-      this.uxShowNewCandidatesNetCore31.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.uxShowNewCandidatesNetCore31.Name = "uxShowNewCandidatesNetCore31";
-      this.uxShowNewCandidatesNetCore31.Size = new System.Drawing.Size(192, 22);
-      this.uxShowNewCandidatesNetCore31.Text = "Show new candidates (.Net 3.1)";
-      this.uxShowNewCandidatesNetCore31.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore31_Click);
+
       // 
       // uxShowNewCandidatesNetCore6
       // 
@@ -181,6 +174,24 @@
       this.uxShowNewCandidatesNetCore6.Size = new System.Drawing.Size(183, 22);
       this.uxShowNewCandidatesNetCore6.Text = "Show new candidates (.Net 6)";
       this.uxShowNewCandidatesNetCore6.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore6_Click);
+
+      // 
+      // uxSearch
+      // 
+      this.uxSearch.CheckOnClick = true;
+      this.uxSearch.Image = ((System.Drawing.Image)(resources.GetObject("uxSearch.Image")));
+      this.uxSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxSearch.Name = "uxSearch";
+      this.uxSearch.Size = new System.Drawing.Size(62, 22);
+      this.uxSearch.Text = "Search";
+      this.uxSearch.Click += new System.EventHandler(this.uxSearch_Click);
+
+      // 
+      // uxSearchText
+      // 
+      this.uxSearchText.Name = "uxSearchText";
+      this.uxSearchText.Size = new System.Drawing.Size(100, 25);
+
       // 
       // Form1
       // 
@@ -198,8 +209,9 @@
       this.toolStrip1.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
-
     }
+
+    private System.Windows.Forms.ToolStripTextBox uxSearchText;
 
     #endregion
 
@@ -211,7 +223,7 @@
     private System.Windows.Forms.ToolStripButton uxShowBinaryReference;
     private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
         private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
-        private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore31;
+        private System.Windows.Forms.ToolStripButton uxSearch;
         private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore6;
     }
 }
