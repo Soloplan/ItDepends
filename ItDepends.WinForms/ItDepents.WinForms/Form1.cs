@@ -191,6 +191,7 @@
         return;
       }
 
+      var showOnlyFullFrameworkBlockers = ModifierKeys.HasFlag(Keys.Alt);
       string objectText;
       switch (e.NewObject)
       {
@@ -204,10 +205,13 @@
           if (project != null)
           {
             // if we have a project, evaluate its references
-            foreach (var projectReference in project.ProjectReferencesAsProjects)
+            foreach (var projectReference in project.ProjectReferencesAsProjects.Where(x => x != null))
             {
-              var supportedFrameworks = string.Join(";", projectReference?.TargetFrameworks);
-              sb.AppendLine($"references {projectReference.ProjectName} ({supportedFrameworks})");
+              var supportedFrameworks = string.Join(";", projectReference.TargetFrameworks);
+              if (!showOnlyFullFrameworkBlockers || !projectReference.TargetFrameworks.SupportsNet6())
+              {
+                sb.AppendLine($"references {projectReference.ProjectName} ({supportedFrameworks})");
+              }
             }
           }
           else
