@@ -9,12 +9,23 @@
 
   public class Solution
   {
-    public Solution(string file)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Solution"/> class.
+    /// </summary>
+    /// <param name="file">The name of the solution file.</param>
+    /// <param name="slnfFile">The name of the slnf file (if one was used for filter the solution file).</param>
+    public Solution(string file, string slnfFile = null)
     {
       this.Filename = file;
+      this.SolutionFilter = slnfFile;
     }
 
     public string Filename { get; private set; }
+    
+    /// <summary>
+    /// Gets the name of the slnf file (if one was used for filter the solution file).
+    /// </summary>
+    public string SolutionFilter { get; private set; }
 
     public List<Project> Projects { get; } = new List<Project>();
 
@@ -30,12 +41,12 @@
       var solutionProjectsProperty = solutionProperty.GetProperty("projects");
       var projectFilter = solutionProjectsProperty.EnumerateArray().Select(x => x.GetString()).ToList();
 
-      return ReadFromSln(solutionPath, projectFilter);
+      return ReadFromSln(solutionPath, projectFilter, slnfFile);
     }
 
-    public static Solution ReadFromSln(string slnFile, IReadOnlyCollection<string> projectFilter = null)
+    public static Solution ReadFromSln(string slnFile, IReadOnlyCollection<string> projectFilter = null, string slnfFile = null)
     {
-      var solution = new Solution(slnFile);
+      var solution = new Solution(slnFile, slnfFile);
       var solutionSln = File.ReadAllLines(slnFile, Encoding.UTF8);
       var projectInSlnRegEx = new Regex(@"Project\(""(?<projecttype>{.*})""\) = ""(?<projectname>.*)"", ""(?<projectfile>.*)"", ""{(?<projectguid>.*)}""", RegexOptions.Compiled);
       foreach (var line in solutionSln)

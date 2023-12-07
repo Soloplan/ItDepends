@@ -1,6 +1,7 @@
 ﻿namespace ItDepents.WinForms
 {
   using System;
+  using System.Collections.Generic;
   using System.IO;
   using System.Linq;
   using System.Text;
@@ -306,6 +307,20 @@
       }
     }
 
+    /// <summary>
+    /// If the user presses enter in the search text box, perform the search.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The event args of the event.</param>
+    private void uxSearchText_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      // if the user presses enter, perform the search
+      if (e.KeyChar == (char)Keys.Enter)
+      {
+        this.uxSearch.PerformClick();
+      }
+    }
+
     private class GraphOptions
     {
       public bool ShowPackageReferences { get; set; }
@@ -316,6 +331,46 @@
       /// Gets or sets a search text. Project names containing this text will be highlighted. 
       /// </summary>
       public string SearchText { get; set; }
+    }
+
+    /// <summary>
+    /// Shows a message box with the number of projects per target framework.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The event args of the event.</param>
+    private void uxShowSolutionMetrics_Click(object sender, EventArgs e)
+    {
+      var projectsByTargetFrameworks = new Dictionary<string, List<Project>>();
+      foreach (var project in this.solution.Projects)
+      {
+        foreach (var targetFramework in project.TargetFrameworks)
+        {
+          if (!projectsByTargetFrameworks.TryGetValue(targetFramework, out var projects))
+          {
+            projects = new List<Project>();
+            projectsByTargetFrameworks.Add(targetFramework, projects);
+          }
+
+          projects.Add(project);
+        }
+      }
+
+      var sb = new StringBuilder();
+      sb.AppendLine("Number of projects per target framework");
+      sb.AppendLine();
+      sb.AppendLine($"Solution: {this.solution.Filename}");
+      if (!string.IsNullOrEmpty(this.solution.SolutionFilter))
+      {
+        sb.AppendLine($"Filter: {this.solution.SolutionFilter}");
+      }
+
+      sb.AppendLine($"Total projects in the solution: {this.solution.Projects.Count}");
+      foreach (var targetFramework in projectsByTargetFrameworks.Keys.OrderBy(x => x))
+      {
+        sb.AppendLine($"{targetFramework}: {projectsByTargetFrameworks[targetFramework].Count}");
+      }
+
+      MessageBox.Show(sb.ToString());
     }
   }
 }

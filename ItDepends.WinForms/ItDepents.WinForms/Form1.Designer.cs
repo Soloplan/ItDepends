@@ -40,10 +40,10 @@
       this.uxShowNewCandidatesNetCore6 = new System.Windows.Forms.ToolStripButton();
       this.uxSearch = new System.Windows.Forms.ToolStripButton();
       this.uxSearchText = new System.Windows.Forms.ToolStripTextBox();
+      this.uxShowSolutionMetrics = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
-
       // 
       // uxGraphViewer
       // 
@@ -58,6 +58,7 @@
       this.uxGraphViewer.FileName = "";
       this.uxGraphViewer.ForwardEnabled = false;
       this.uxGraphViewer.Graph = null;
+      this.uxGraphViewer.IncrementalDraggingModeAlways = false;
       this.uxGraphViewer.InsertingEdge = false;
       this.uxGraphViewer.LayoutAlgorithmSettingsButtonVisible = true;
       this.uxGraphViewer.LayoutEditingEnabled = true;
@@ -75,7 +76,7 @@
       this.uxGraphViewer.SaveButtonVisible = true;
       this.uxGraphViewer.SaveGraphButtonVisible = true;
       this.uxGraphViewer.SaveInVectorFormatEnabled = true;
-      this.uxGraphViewer.Size = new System.Drawing.Size(953, 403);
+      this.uxGraphViewer.Size = new System.Drawing.Size(1026, 403);
       this.uxGraphViewer.TabIndex = 0;
       this.uxGraphViewer.TightOffsetForRouting = 0.125D;
       this.uxGraphViewer.ToolBarIsVisible = true;
@@ -87,34 +88,39 @@
       this.uxGraphViewer.ObjectUnderMouseCursorChanged += new System.EventHandler<Microsoft.Msagl.Drawing.ObjectUnderMouseCursorChangedEventArgs>(this.uxGraphViewer_ObjectUnderMouseCursorChanged);
       this.uxGraphViewer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.uxGraphViewer_MouseMove);
       this.uxGraphViewer.Click += new System.EventHandler(this.uxGraphViewer_Click);
-
       // 
       // statusStrip1
       // 
-      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.uxStatusLabel });
+      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.uxStatusLabel});
       this.statusStrip1.Location = new System.Drawing.Point(0, 428);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(953, 22);
+      this.statusStrip1.Size = new System.Drawing.Size(1026, 22);
       this.statusStrip1.TabIndex = 1;
       this.statusStrip1.Text = "statusStrip1";
-
       // 
       // uxStatusLabel
       // 
       this.uxStatusLabel.Name = "uxStatusLabel";
       this.uxStatusLabel.Size = new System.Drawing.Size(118, 17);
       this.uxStatusLabel.Text = "toolStripStatusLabel1";
-
       // 
       // toolStrip1
       // 
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.uxOpenSolutionButton, this.uxShowBinaryReference, this.uxShowPackageReferences, this.uxSaveAsGraphViz, this.uxShowNewCandidatesNetCore6, this.uxSearch, this.uxSearchText });
+      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.uxOpenSolutionButton,
+            this.uxShowBinaryReference,
+            this.uxShowPackageReferences,
+            this.uxSaveAsGraphViz,
+            this.uxShowNewCandidatesNetCore6,
+            this.uxSearch,
+            this.uxSearchText,
+            this.uxShowSolutionMetrics});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(953, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(1026, 25);
       this.toolStrip1.TabIndex = 2;
       this.toolStrip1.Text = "toolStrip1";
-
       // 
       // uxOpenSolutionButton
       // 
@@ -125,7 +131,6 @@
       this.uxOpenSolutionButton.Size = new System.Drawing.Size(96, 22);
       this.uxOpenSolutionButton.Text = "Open Solution...";
       this.uxOpenSolutionButton.Click += new System.EventHandler(this.uxOpenSolutionButton_Click);
-
       // 
       // uxShowBinaryReference
       // 
@@ -139,7 +144,6 @@
       this.uxShowBinaryReference.Text = "Show binary references";
       this.uxShowBinaryReference.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
       this.uxShowBinaryReference.Click += new System.EventHandler(this.uxShowBinaryReference_Click);
-
       // 
       // uxShowPackageReferences
       // 
@@ -153,7 +157,6 @@
       this.uxShowPackageReferences.Text = "Show package references";
       this.uxShowPackageReferences.CheckedChanged += new System.EventHandler(this.uxShowReferences_CheckedChanged);
       this.uxShowPackageReferences.Click += new System.EventHandler(this.uxShowPackageReferences_Click);
-
       // 
       // uxSaveAsGraphViz
       // 
@@ -163,7 +166,6 @@
       this.uxSaveAsGraphViz.Size = new System.Drawing.Size(124, 22);
       this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
       this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
-
       // 
       // uxShowNewCandidatesNetCore6
       // 
@@ -174,7 +176,6 @@
       this.uxShowNewCandidatesNetCore6.Size = new System.Drawing.Size(183, 22);
       this.uxShowNewCandidatesNetCore6.Text = "Show new candidates (.Net 6)";
       this.uxShowNewCandidatesNetCore6.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore6_Click);
-
       // 
       // uxSearch
       // 
@@ -185,19 +186,29 @@
       this.uxSearch.Size = new System.Drawing.Size(62, 22);
       this.uxSearch.Text = "Search";
       this.uxSearch.Click += new System.EventHandler(this.uxSearch_Click);
-
       // 
       // uxSearchText
       // 
+      this.uxSearchText.Font = new System.Drawing.Font("Segoe UI", 9F);
       this.uxSearchText.Name = "uxSearchText";
       this.uxSearchText.Size = new System.Drawing.Size(100, 25);
-
+      this.uxSearchText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.uxSearchText_KeyPress);
+      // 
+      // uxShowSolutionMetrics
+      // 
+      this.uxShowSolutionMetrics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.uxShowSolutionMetrics.Image = ((System.Drawing.Image)(resources.GetObject("uxShowSolutionMetrics.Image")));
+      this.uxShowSolutionMetrics.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowSolutionMetrics.Name = "uxShowSolutionMetrics";
+      this.uxShowSolutionMetrics.Size = new System.Drawing.Size(106, 22);
+      this.uxShowSolutionMetrics.Text = "Solution metrics...";
+      this.uxShowSolutionMetrics.Click += new System.EventHandler(this.uxShowSolutionMetrics_Click);
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(953, 450);
+      this.ClientSize = new System.Drawing.Size(1026, 450);
       this.Controls.Add(this.uxGraphViewer);
       this.Controls.Add(this.toolStrip1);
       this.Controls.Add(this.statusStrip1);
@@ -209,6 +220,7 @@
       this.toolStrip1.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
+
     }
 
     private System.Windows.Forms.ToolStripTextBox uxSearchText;
@@ -225,6 +237,7 @@
         private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
         private System.Windows.Forms.ToolStripButton uxSearch;
         private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore6;
-    }
+    private System.Windows.Forms.ToolStripButton uxShowSolutionMetrics;
+  }
 }
 
