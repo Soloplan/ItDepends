@@ -341,6 +341,8 @@
     private void uxShowSolutionMetrics_Click(object sender, EventArgs e)
     {
       var projectsByTargetFrameworks = new Dictionary<string, List<Project>>();
+      var netCoreProjects = new List<Project>();
+      var fullFrameworkOnlyProjects = new List<Project>();
       foreach (var project in this.solution.Projects)
       {
         foreach (var targetFramework in project.TargetFrameworks)
@@ -352,6 +354,15 @@
           }
 
           projects.Add(project);
+        }
+
+        if (project.TargetFrameworks.SupportsNet())
+        {
+          netCoreProjects.Add(project);
+        }
+        else
+        {
+          fullFrameworkOnlyProjects.Add(project);
         }
       }
 
@@ -369,6 +380,10 @@
       {
         sb.AppendLine($"{targetFramework}: {projectsByTargetFrameworks[targetFramework].Count}");
       }
+
+      sb.AppendLine();
+      sb.AppendLine($"Projects that support .Net Core: {netCoreProjects.Count} ({Math.Round(100 * netCoreProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
+      sb.AppendLine($"Projects that only target full framework: {fullFrameworkOnlyProjects.Count} ({Math.Round(100 * fullFrameworkOnlyProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
 
       MessageBox.Show(sb.ToString());
     }
