@@ -37,7 +37,7 @@
       this.uxShowBinaryReference = new System.Windows.Forms.ToolStripButton();
       this.uxShowPackageReferences = new System.Windows.Forms.ToolStripButton();
       this.uxSaveAsGraphViz = new System.Windows.Forms.ToolStripButton();
-      this.uxShowNewCandidatesNetCore6 = new System.Windows.Forms.ToolStripButton();
+      this.uxShowNewCandidatesNet8 = new System.Windows.Forms.ToolStripButton();
       this.uxSearch = new System.Windows.Forms.ToolStripButton();
       this.uxSearchText = new System.Windows.Forms.ToolStripTextBox();
       this.uxShowSolutionMetrics = new System.Windows.Forms.ToolStripButton();
@@ -112,7 +112,7 @@
             this.uxShowBinaryReference,
             this.uxShowPackageReferences,
             this.uxSaveAsGraphViz,
-            this.uxShowNewCandidatesNetCore6,
+            this.uxShowNewCandidatesNet8,
             this.uxSearch,
             this.uxSearchText,
             this.uxShowSolutionMetrics});
@@ -167,15 +167,15 @@
       this.uxSaveAsGraphViz.Text = "Save as GraphViz...";
       this.uxSaveAsGraphViz.Click += new System.EventHandler(this.uxSaveAsGraphViz_Click);
       // 
-      // uxShowNewCandidatesNetCore6
+      // uxShowNewCandidatesNet8
       // 
-      this.uxShowNewCandidatesNetCore6.CheckOnClick = true;
-      this.uxShowNewCandidatesNetCore6.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidatesNetCore6.Image")));
-      this.uxShowNewCandidatesNetCore6.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.uxShowNewCandidatesNetCore6.Name = "uxShowNewCandidatesNetCore6";
-      this.uxShowNewCandidatesNetCore6.Size = new System.Drawing.Size(183, 22);
-      this.uxShowNewCandidatesNetCore6.Text = "Show new candidates (.Net 6)";
-      this.uxShowNewCandidatesNetCore6.Click += new System.EventHandler(this.uxShowNewCandidatesNetCore6_Click);
+      this.uxShowNewCandidatesNet8.CheckOnClick = true;
+      this.uxShowNewCandidatesNet8.Image = ((System.Drawing.Image)(resources.GetObject("uxShowNewCandidatesNet8.Image")));
+      this.uxShowNewCandidatesNet8.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxShowNewCandidatesNet8.Name = "uxShowNewCandidatesNet8";
+      this.uxShowNewCandidatesNet8.Size = new System.Drawing.Size(183, 22);
+      this.uxShowNewCandidatesNet8.Text = "Show new candidates (.Net 8)";
+      this.uxShowNewCandidatesNet8.Click += new System.EventHandler(this.uxShowNewCandidatesNet8_Click);
       // 
       // uxSearch
       // 
@@ -236,7 +236,7 @@
     private System.Windows.Forms.ToolStripButton uxShowPackageReferences;
         private System.Windows.Forms.ToolStripButton uxSaveAsGraphViz;
         private System.Windows.Forms.ToolStripButton uxSearch;
-        private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNetCore6;
+        private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNet8;
     private System.Windows.Forms.ToolStripButton uxShowSolutionMetrics;
   }
 }

@@ -81,10 +81,10 @@
           }
         }
 
-        if (!project.TargetFrameworks.SupportsNet6()
-          && graphOptions.ShowNewCandidatesNet6)
+        if (!project.TargetFrameworks.SupportsNet8()
+          && graphOptions.ShowNewCandidatesNet8)
         {
-          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNet6());
+          var allReferencesSupportCore = project.ProjectReferencesAsProjects.All(x => x.TargetFrameworks.SupportsNet8());
           if (allReferencesSupportCore)
           {
             projectNode.Attr.FillColor = Color.GreenYellow;
@@ -209,7 +209,7 @@
             foreach (var projectReference in project.ProjectReferencesAsProjects.Where(x => x != null))
             {
               var supportedFrameworks = string.Join(";", projectReference.TargetFrameworks);
-              if (!showOnlyFullFrameworkBlockers || !projectReference.TargetFrameworks.SupportsNet6())
+              if (!showOnlyFullFrameworkBlockers || !projectReference.TargetFrameworks.SupportsNet8())
               {
                 sb.AppendLine($"references {projectReference.ProjectName} ({supportedFrameworks})");
               }
@@ -274,7 +274,7 @@
       this.BuildGraph(this.solution, this.BuildGraphOptions());
     }
 
-    private void uxShowNewCandidatesNetCore6_Click(object sender, EventArgs e)
+    private void uxShowNewCandidatesNet8_Click(object sender, EventArgs e)
     {
       // toggle new candidates
       this.BuildGraph(this.solution, this.BuildGraphOptions());
@@ -286,7 +286,7 @@
       {
         ShowPackageReferences = this.uxShowPackageReferences.Checked,
         ShowBinaryReferences = this.uxShowBinaryReference.Checked,
-        ShowNewCandidatesNet6 = this.uxShowNewCandidatesNetCore6.Checked,
+        ShowNewCandidatesNet8 = this.uxShowNewCandidatesNet8.Checked,
         SearchText = this.uxSearchText.Text,
       };
     }
@@ -325,7 +325,7 @@
     {
       public bool ShowPackageReferences { get; set; }
       public bool ShowBinaryReferences { get; set; }
-      public bool ShowNewCandidatesNet6 { get; set; }
+      public bool ShowNewCandidatesNet8 { get; set; }
 
       /// <summary>
       /// Gets or sets a search text. Project names containing this text will be highlighted. 

@@ -9,14 +9,14 @@ namespace ItDepents.WinForms
       return targetFramework == "net472";
     }
 
-    public static bool SupportsNet6(this string[] targetFrameworks)
+    public static bool SupportsNet8(this string[] targetFrameworks)
     {
       if (targetFrameworks == null)
       {
         return false;
       }
 
-      return targetFrameworks.Any(x => x.StartsWith("net6") || x == "netstandard2.0");
+      return targetFrameworks.Any(x => x.StartsWith("net8") || x == "netstandard2.0");
     }
 
     public static bool SupportsNet(this string[] targetFrameworks)
