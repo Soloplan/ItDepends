@@ -67,8 +67,8 @@
 
         if (project.TargetFrameworks != null)
         {
-          // .Net 6? -> pale green color
-          if (project.TargetFrameworks.Any(x => x.StartsWith("net6")))
+          // .Net 8? -> pale green color
+          if (project.TargetFrameworks.Any(x => x.StartsWith("net8")))
           {
             projectNode.Attr.FillColor = Color.PaleGreen;
           }
