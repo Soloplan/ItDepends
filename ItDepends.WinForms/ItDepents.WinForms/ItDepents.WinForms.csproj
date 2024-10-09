@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Include="Microsoft.Msagl.GraphViewerGDI" Version="1.1.7" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
-    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Form1.cs">
