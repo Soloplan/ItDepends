@@ -375,6 +375,12 @@
       }
 
       var text = stringBuilder.ToString();
+      if (string.IsNullOrEmpty(text))
+      {
+        // if there are no missing projects, do nothing
+        return;
+      }
+      
       var dataObject = new DataObject();
       
       // Add UnicodeText format
