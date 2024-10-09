@@ -41,6 +41,7 @@
       this.uxSearch = new System.Windows.Forms.ToolStripButton();
       this.uxSearchText = new System.Windows.Forms.ToolStripTextBox();
       this.uxShowSolutionMetrics = new System.Windows.Forms.ToolStripButton();
+      this.uxCopyMissingProjectsToClipboard = new System.Windows.Forms.ToolStripButton();
       this.statusStrip1.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -76,7 +77,7 @@
       this.uxGraphViewer.SaveButtonVisible = true;
       this.uxGraphViewer.SaveGraphButtonVisible = true;
       this.uxGraphViewer.SaveInVectorFormatEnabled = true;
-      this.uxGraphViewer.Size = new System.Drawing.Size(1026, 403);
+      this.uxGraphViewer.Size = new System.Drawing.Size(1192, 433);
       this.uxGraphViewer.TabIndex = 0;
       this.uxGraphViewer.TightOffsetForRouting = 0.125D;
       this.uxGraphViewer.ToolBarIsVisible = true;
@@ -93,9 +94,9 @@
       // 
       this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uxStatusLabel});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+      this.statusStrip1.Location = new System.Drawing.Point(0, 458);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(1026, 22);
+      this.statusStrip1.Size = new System.Drawing.Size(1192, 22);
       this.statusStrip1.TabIndex = 1;
       this.statusStrip1.Text = "statusStrip1";
       // 
@@ -115,10 +116,11 @@
             this.uxShowNewCandidatesNet8,
             this.uxSearch,
             this.uxSearchText,
-            this.uxShowSolutionMetrics});
+            this.uxShowSolutionMetrics,
+            this.uxCopyMissingProjectsToClipboard});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(1026, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(1192, 25);
       this.toolStrip1.TabIndex = 2;
       this.toolStrip1.Text = "toolStrip1";
       // 
@@ -204,11 +206,22 @@
       this.uxShowSolutionMetrics.Text = "Solution metrics...";
       this.uxShowSolutionMetrics.Click += new System.EventHandler(this.uxShowSolutionMetrics_Click);
       // 
+      // uxCopyMissingProjectsToClipboard
+      // 
+      this.uxCopyMissingProjectsToClipboard.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.uxCopyMissingProjectsToClipboard.Image = ((System.Drawing.Image)(resources.GetObject("uxCopyMissingProjectsToClipboard.Image")));
+      this.uxCopyMissingProjectsToClipboard.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.uxCopyMissingProjectsToClipboard.Name = "uxCopyMissingProjectsToClipboard";
+      this.uxCopyMissingProjectsToClipboard.Size = new System.Drawing.Size(97, 22);
+      this.uxCopyMissingProjectsToClipboard.Text = "Missing projects";
+      this.uxCopyMissingProjectsToClipboard.ToolTipText = "Copy missing projects (not yet available for .NET 8) to clipboard";
+      this.uxCopyMissingProjectsToClipboard.Click += new System.EventHandler(this.uxCopyMissingProjectsToClipboard_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1026, 450);
+      this.ClientSize = new System.Drawing.Size(1192, 480);
       this.Controls.Add(this.uxGraphViewer);
       this.Controls.Add(this.toolStrip1);
       this.Controls.Add(this.statusStrip1);
@@ -238,6 +251,7 @@
         private System.Windows.Forms.ToolStripButton uxSearch;
         private System.Windows.Forms.ToolStripButton uxShowNewCandidatesNet8;
     private System.Windows.Forms.ToolStripButton uxShowSolutionMetrics;
+    private System.Windows.Forms.ToolStripButton uxCopyMissingProjectsToClipboard;
   }
 }
 

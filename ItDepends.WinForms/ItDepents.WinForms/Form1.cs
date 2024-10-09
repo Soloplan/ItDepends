@@ -2,6 +2,7 @@
 {
   using System;
   using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.IO;
   using System.Linq;
   using System.Text;
@@ -340,6 +341,59 @@
     /// <param name="e">The event args of the event.</param>
     private void uxShowSolutionMetrics_Click(object sender, EventArgs e)
     {
+      var solutionMetrics = BuildMetrics();
+
+      var sb = new StringBuilder();
+      sb.AppendLine("Number of projects per target framework");
+      sb.AppendLine();
+      sb.AppendLine($"Solution: {this.solution.Filename}");
+      if (!string.IsNullOrEmpty(this.solution.SolutionFilter))
+      {
+        sb.AppendLine($"Filter: {this.solution.SolutionFilter}");
+      }
+
+      sb.AppendLine($"Total projects in the solution: {this.solution.Projects.Count}");
+      foreach (var targetFramework in solutionMetrics.ProjectsByTargetFrameworks.Keys.OrderBy(x => x))
+      {
+        sb.AppendLine($"{targetFramework}: {solutionMetrics.ProjectsByTargetFrameworks[targetFramework].Count}");
+      }
+
+      sb.AppendLine();
+      sb.AppendLine($"Projects that support .Net Core: {solutionMetrics.NetCoreProjects.Count} ({Math.Round(100 * solutionMetrics.NetCoreProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
+      sb.AppendLine($"Projects that only target full framework: {solutionMetrics.FullFrameworkOnlyProjects.Count} ({Math.Round(100 * solutionMetrics.FullFrameworkOnlyProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
+
+      MessageBox.Show(sb.ToString());
+    }
+
+    private void uxCopyMissingProjectsToClipboard_Click(object sender, EventArgs e)
+    {
+      var solutionMetrics = BuildMetrics();
+      var stringBuilder = new StringBuilder();
+      foreach (var fullFrameworkProject in solutionMetrics.FullFrameworkOnlyProjects.OrderBy(x => x.ProjectName))
+      {
+        stringBuilder.AppendLine(fullFrameworkProject.ProjectName);
+      }
+
+      var text = stringBuilder.ToString();
+      var dataObject = new DataObject();
+      
+      // Add UnicodeText format
+      dataObject.SetText(text, TextDataFormat.UnicodeText);
+
+      // Add CommaSeparatedValue format
+      string csvText = text.Replace(Environment.NewLine, ",");
+      // Convert the CSV text to a UTF-8 byte stream before adding it to the container object.
+      // see https://stackoverflow.com/questions/329918/how-to-paste-csv-data-to-windows-clipboard-with-c-sharp
+      var bytes = Encoding.UTF8.GetBytes(csvText);
+      var stream = new MemoryStream(bytes);
+      dataObject.SetData(System.Windows.DataFormats.CommaSeparatedValue, stream);
+
+      // Set the DataObject to the clipboard
+      Clipboard.SetDataObject(dataObject, true);
+    }
+
+    private SolutionMetrics BuildMetrics()
+    {
       var projectsByTargetFrameworks = new Dictionary<string, List<Project>>();
       var netCoreProjects = new List<Project>();
       var fullFrameworkOnlyProjects = new List<Project>();
@@ -366,26 +420,19 @@
         }
       }
 
-      var sb = new StringBuilder();
-      sb.AppendLine("Number of projects per target framework");
-      sb.AppendLine();
-      sb.AppendLine($"Solution: {this.solution.Filename}");
-      if (!string.IsNullOrEmpty(this.solution.SolutionFilter))
+      return new SolutionMetrics()
       {
-        sb.AppendLine($"Filter: {this.solution.SolutionFilter}");
-      }
+        ProjectsByTargetFrameworks = projectsByTargetFrameworks,
+        FullFrameworkOnlyProjects = fullFrameworkOnlyProjects,
+        NetCoreProjects = netCoreProjects,
+      };
+    }
 
-      sb.AppendLine($"Total projects in the solution: {this.solution.Projects.Count}");
-      foreach (var targetFramework in projectsByTargetFrameworks.Keys.OrderBy(x => x))
-      {
-        sb.AppendLine($"{targetFramework}: {projectsByTargetFrameworks[targetFramework].Count}");
-      }
-
-      sb.AppendLine();
-      sb.AppendLine($"Projects that support .Net Core: {netCoreProjects.Count} ({Math.Round(100 * netCoreProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
-      sb.AppendLine($"Projects that only target full framework: {fullFrameworkOnlyProjects.Count} ({Math.Round(100 * fullFrameworkOnlyProjects.Count / (double)this.solution.Projects.Count, 1)} %)");
-
-      MessageBox.Show(sb.ToString());
+    public class SolutionMetrics
+    {
+      public Dictionary<string, List<Project>> ProjectsByTargetFrameworks { get; init; }
+      public IReadOnlyCollection<Project> NetCoreProjects { get; init; }
+      public IReadOnlyCollection<Project> FullFrameworkOnlyProjects { get; init; }
     }
   }
 }
